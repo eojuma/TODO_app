@@ -6,6 +6,7 @@
     const addBtn = document.getElementById('addTaskBtn');
     const taskListContainer = document.getElementById('tasklist');
     const themeToggle = document.getElementById('theme-toggle');
+    const bubble = document.getElementById('bubble-pop');
 
     const STORAGE_KEY = 'jipangenow_editable_tasks';
 
@@ -26,24 +27,63 @@
         return dueDate < today;
     }
 
+    // --- PROGRESS BUBBLE LOGIC ---
+    function updateProgress() {
+        const tasks = loadTasks();
+        if (!bubble) return;
+
+        if (tasks.length === 0) {
+            bubble.textContent = "0%";
+            bubble.style.transform = "scale(1)";
+            bubble.classList.remove('burst');
+            return;
+        }
+
+        const completedCount = tasks.filter(t => t.isDone).length;
+        const percent = Math.round((completedCount / tasks.length) * 100);
+        
+        // Handle the Burst effect at 100%
+        if (percent === 100 && !bubble.classList.contains('burst')) {
+            bubble.textContent = `${percent}%`;
+            bubble.style.transform = "scale(2)"; 
+            bubble.classList.add('burst');
+            
+            setTimeout(() => {
+                bubble.textContent = "💥";
+                setTimeout(() => {
+                    bubble.classList.remove('burst');
+                    // Recalculate to reset the visual state after the pop
+                    updateProgress();
+                }, 1500);
+            }, 500);
+        } else if (percent < 100) {
+            bubble.classList.remove('burst');
+            bubble.textContent = `${percent}%`;
+            // Scale grows between 1.0 and 1.8 based on progress
+            const scaleValue = 1 + (percent / 125); 
+            bubble.style.transform = `scale(${scaleValue})`;
+        }
+    }
+
+    // --- RENDERING LOGIC ---
     function renderTasks(tasks) {
         if (!taskListContainer) return;
         taskListContainer.innerHTML = '';
+        updateProgress();
 
         tasks.forEach((task, idx) => {
             const card = document.createElement('div');
+            // 'completed' class handles the strike-through via CSS
             card.className = `task-card ${task.isDone ? 'completed' : ''} ${!task.isDone && isOverdue(task.dueDate) ? 'overdue' : ''}`;
             
             const contentDiv = document.createElement('div');
             contentDiv.className = 'task-content';
 
-            // --- DONE CHECKBOX ---
             const doneCheck = document.createElement('input');
             doneCheck.type = 'checkbox';
             doneCheck.className = 'task-checkbox';
             doneCheck.checked = task.isDone || false;
-            doneCheck.onclick = (e) => {
-                e.stopPropagation();
+            doneCheck.onchange = () => {
                 tasks[idx].isDone = doneCheck.checked;
                 saveTasks(tasks);
                 renderTasks(tasks);
@@ -69,15 +109,20 @@
 
             const renderViewMode = () => {
                 const overdueTag = (!task.isDone && isOverdue(task.dueDate)) ? '<span class="overdue-badge">⚠️ OVERDUE</span>' : '';
+                const categoryIcons = {
+                    work: '💼', Personal: '🧘', Study: '📚', 
+                    Finances: '💰', Health: '🏥', Spirituality: '✨'
+                };
                 metaDiv.innerHTML = `
                     <span class="priority-badge">${task.priority.toUpperCase()}</span>
-                    <span class="category-badge">${task.category}</span>
+                    <span class="category-badge">${categoryIcons[task.category] || ''} ${task.category}</span>
                     ${task.dueDate ? `<span class="date-badge">📅 ${task.dueDate}</span>` : ''}
                     ${overdueTag}
                 `;
             };
             renderViewMode();
 
+            // --- EDIT MODE LOGIC ---
             editBtn.onclick = () => {
                 card.classList.add('edit-mode');
                 editBtn.style.display = 'none';
@@ -95,6 +140,9 @@
                         <option value="work" ${task.category === 'work' ? 'selected' : ''}>Work</option>
                         <option value="Personal" ${task.category === 'Personal' ? 'selected' : ''}>Personal</option>
                         <option value="Study" ${task.category === 'Study' ? 'selected' : ''}>Study</option>
+                        <option value="Finances" ${task.category === 'Finances' ? 'selected' : ''}>Finances</option>
+                        <option value="Health" ${task.category === 'Health' ? 'selected' : ''}>Health</option>
+                        <option value="Spirituality" ${task.category === 'Spirituality' ? 'selected' : ''}>Spirituality</option>
                     </select>
                     <input type="date" id="edit-date-${idx}" value="${task.dueDate || ''}">
                 `;
@@ -144,14 +192,29 @@
         renderTasks(tasks);
         titleInput.value = '';
         dateInput.value = '';
+        titleInput.focus();
+    }
+
+    // --- THEME LOGIC ---
+    function initTheme() {
+        const savedTheme = localStorage.getItem('jipange_theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+            themeToggle.textContent = '☀️ Light mode';
+        } else {
+            document.body.classList.remove('dark');
+            themeToggle.textContent = '🌓 Dark mode';
+        }
     }
 
     themeToggle.onclick = () => {
-        document.body.classList.toggle('dark');
-        localStorage.setItem('jipange_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        const isDarkNow = document.body.classList.toggle('dark');
+        localStorage.setItem('jipange_theme', isDarkNow ? 'dark' : 'light');
+        themeToggle.textContent = isDarkNow ? '☀️ Light mode' : '🌓 Dark mode';
     };
 
-    if (localStorage.getItem('jipange_theme') === 'dark') document.body.classList.add('dark');
+    // --- INITIALIZE ---
+    initTheme();
     addBtn.onclick = addNewTask;
     renderTasks(loadTasks());
 })();
