@@ -1,301 +1,141 @@
-/* ===== RESET & BASE STYLES ===== */
+/* --- Root Variables & Base Styles --- */
+:root {
+    --bg-color: #f8fafc;
+    --text-color: #1e293b;
+    --card-bg: #ffffff;
+    --accent-color: #6366f1;
+    --border-color: #e2e8f0;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Overrides (Triggered via JS class on body) */
+body.dark-mode {
+    --bg-color: #0f172a;
+    --text-color: #f1f5f9;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+}
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: #f5f7fb;
-    color: #1e293b;
-    max-width: 800px;
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 2rem 1rem;
+    max-width: 500px;
     margin: 0 auto;
-    padding: 2rem 1.5rem;
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
-/* ===== TYPOGRAPHY & HEADER ===== */
+/* --- UI Components --- */
 header {
     text-align: center;
     margin-bottom: 2rem;
 }
 
-h1 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: -0.02em;
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
 }
 
-/* ===== FORM STYLES ===== */
 label {
     display: block;
+    font-size: 0.85rem;
     font-weight: 600;
-    margin-top: 1rem;
-    margin-bottom: 0.25rem;
-    font-size: 0.875rem;
-    color: #475569;
+    margin: 1rem 0 0.3rem;
+    opacity: 0.8;
 }
 
-input, select, button:not(.theme-toggle) {
+input, select {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     font-size: 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 0.75rem;
-    background: white;
-    transition: all 0.2s ease;
+    outline: none;
 }
 
 input:focus, select:focus {
-    outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
 
-/* Add Task Button */
-button:not(.theme-toggle) {
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
+#addTaskBtn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--accent-color);
     color: white;
-    font-weight: 600;
     border: none;
-    margin-top: 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-top: 1rem;
+    transition: transform 0.1s;
 }
 
-button:not(.theme-toggle):hover {
-    transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+#addTaskBtn:active {
+    transform: scale(0.98);
 }
 
-/* ===== THEME TOGGLE BUTTON ===== */
-.theme-toggle {
-    position: fixed;
-    top: 1.2rem;
-    right: 1.5rem;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 2rem;
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-    font-weight: 500;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    background-color: rgba(255,255,255,0.9);
-    transition: all 0.2s ease;
-    z-index: 100;
-}
-
-.theme-toggle:hover {
-    background: #f1f5f9;
-    transform: scale(1.02);
-}
-
-/* ===== TASK LIST STYLES ===== */
+/* --- Task List & Items --- */
 #tasklist {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
+}
+
+.task-item {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* Individual task card */
-.task-card {
-    background: white;
-    border-radius: 1rem;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    border: 1px solid #eef2ff;
-    transition: all 0.2s ease;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.task-card:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
-    border-color: #cbd5e1;
+/* --- Accomplished/Strikethrough Class --- */
+.completed {
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Task content area */
-.task-content {
-    flex: 1;
-    min-width: 180px;
+.completed .task-title {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: #94a3b8;
 }
 
-.task-title {
-    font-weight: 700;
-    font-size: 1.05rem;
-    margin-bottom: 0.25rem;
-    color: #0f172a;
-}
-
-.task-meta {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+/* Utility classes for task badges */
+.badge {
     font-size: 0.7rem;
-    font-weight: 500;
-}
-
-/* Priority & category badges */
-.priority-badge, .category-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 2rem;
-    background: #f1f5f9;
-    color: #334155;
-}
-
-.priority-high {
-    background: #fee2e2;
-    color: #b91c1c;
-    border-left: 3px solid #dc2626;
-}
-
-.priority-medium {
-    background: #fff3e3;
-    color: #b45309;
-    border-left: 3px solid #f97316;
-}
-
-.priority-low {
-    background: #e0f2fe;
-    color: #075985;
-    border-left: 3px solid #0ea5e9;
-}
-
-.category-badge[data-category="work"] { background: #e0e7ff; color: #3730a3; }
-.category-badge[data-category="Personal"] { background: #fce7f3; color: #9d174d; }
-.category-badge[data-category="Study"] { background: #dcfce7; color: #166534; }
-
-/* Delete button */
-.delete-task {
-    background: transparent;
-    border: none;
-    font-size: 1.25rem;
-    cursor: pointer;
-    color: #94a3b8;
-    padding: 0.3rem 0.6rem;
-    border-radius: 2rem;
-    transition: all 0.2s;
-    width: auto;
-}
-
-.delete-task:hover {
-    color: #ef4444;
-    background: #fee2e2;
-    transform: scale(1.05);
-}
-
-/* ===== DARK MODE STYLES ===== */
-body.dark {
-    background: #0f172a;
-    color: #e2e8f0;
-}
-
-body.dark label {
-    color: #94a3b8;
-}
-
-body.dark input, 
-body.dark select,
-body.dark .task-card,
-body.dark .theme-toggle {
-    background: #1e293b;
-    border-color: #334155;
-    color: #f1f5f9;
-}
-
-body.dark .task-title {
-    color: #f1f5f9;
-}
-
-body.dark .priority-badge,
-body.dark .category-badge {
-    background: #334155;
-    color: #cbd5e6;
-}
-
-body.dark .priority-high {
-    background: #2d1a1a;
-    color: #f87171;
-}
-
-body.dark .priority-medium {
-    background: #2a241a;
-    color: #fb923c;
-}
-
-body.dark .priority-low {
-    background: #142c3a;
-    color: #7dd3fc;
-}
-
-body.dark .delete-task:hover {
-    background: #3b1e1e;
-}
-
-body.dark input:focus, 
-body.dark select:focus {
-    border-color: #60a5fa;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 550px) {
-    body {
-        padding: 1.5rem 1rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    .task-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .delete-task {
-        align-self: flex-end;
-    }
-    
-    .theme-toggle {
-        top: 0.8rem;
-        right: 1rem;
-        font-size: 0.75rem;
-        padding: 0.35rem 0.8rem;
-    }
-}
-
-/* Empty state styling */
-#tasklist:empty::before {
-    content: "✨ No tasks yet. Add your first task above! ✨";
-    display: block;
-    text-align: center;
-    padding: 2rem;
-    background: #f8fafc;
-    border-radius: 1rem;
-    color: #64748b;
-    font-style: italic;
-    border: 1px dashed #cbd5e1;
-}
-
-body.dark #tasklist:empty::before {
-    background: #1e293b;
-    color: #94a3b8;
-    border-color: #334155;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 800;
 }
