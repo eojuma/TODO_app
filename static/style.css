@@ -7,8 +7,8 @@
 
 body {
     font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: #f5f7fb;
-    color: #1e293b;
+    background: #8ea7da;
+    color: #361e3b;
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
@@ -25,7 +25,7 @@ header {
 h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    background: linear-gradient(135deg, #e57bff, #943794);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -39,7 +39,7 @@ label {
     margin-top: 1rem;
     margin-bottom: 0.25rem;
     font-size: 0.875rem;
-    color: #475569;
+    color: #ca02fc;
 }
 
 input, select, button:not(.theme-toggle) {
@@ -54,13 +54,13 @@ input, select, button:not(.theme-toggle) {
 
 input:focus, select:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: #8d379e;
+    box-shadow: 0 0 0 3px rgba(247, 97, 234, 0.1);
 }
 
 /* Add Task Button */
 button:not(.theme-toggle) {
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    background: linear-gradient(135deg, #df16e6, #7c3aed);
     color: white;
     font-weight: 600;
     border: none;
@@ -72,7 +72,7 @@ button:not(.theme-toggle) {
 button:not(.theme-toggle):hover {
     transform: translateY(-1px);
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+    background: linear-gradient(135deg, #c138d3, #6d28d9);
 }
 
 /* ===== THEME TOGGLE BUTTON ===== */
@@ -250,7 +250,7 @@ body.dark .delete-task:hover {
 
 body.dark input:focus, 
 body.dark select:focus {
-    border-color: #60a5fa;
+    border-color: #ad46b6;
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
