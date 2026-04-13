@@ -23,12 +23,10 @@ body.dark-mode {
 }
 
 body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.6;
-    padding: 2rem 1rem;
-    max-width: 500px;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: #8ea7da;
+    color: #361e3b;
+    max-width: 800px;
     margin: 0 auto;
     transition: background-color 0.3s ease;
 }
@@ -39,26 +37,24 @@ header {
     margin-bottom: 2rem;
 }
 
-.theme-toggle {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-color);
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.2s;
+h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #e57bff, #943794);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
 }
 
 label {
     display: block;
     font-size: 0.85rem;
     font-weight: 600;
-    margin: 1rem 0 0.3rem;
-    opacity: 0.8;
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.875rem;
+    color: #ca02fc;
 }
 
 input, select {
@@ -74,19 +70,38 @@ input, select {
 }
 
 input:focus, select:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    outline: none;
+    border-color: #8d379e;
+    box-shadow: 0 0 0 3px rgba(247, 97, 234, 0.1);
 }
 
-#addTaskBtn {
-    width: 100%;
-    padding: 0.8rem;
-    background-color: var(--accent-color);
+/* Add Task Button */
+button:not(.theme-toggle) {
+    background: linear-gradient(135deg, #df16e6, #7c3aed);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    font-size: 1rem;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+button:not(.theme-toggle):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    background: linear-gradient(135deg, #c138d3, #6d28d9);
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
+.theme-toggle {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
     margin-top: 1rem;
     transition: transform 0.1s;
@@ -131,11 +146,92 @@ input:focus, select:focus {
     color: #94a3b8;
 }
 
-/* Utility classes for task badges */
-.badge {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    text-transform: uppercase;
-    font-weight: 800;
+body.dark input, 
+body.dark select,
+body.dark .task-card,
+body.dark .theme-toggle {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark .task-title {
+    color: #f1f5f9;
+}
+
+body.dark .priority-badge,
+body.dark .category-badge {
+    background: #334155;
+    color: #cbd5e6;
+}
+
+body.dark .priority-high {
+    background: #2d1a1a;
+    color: #f87171;
+}
+
+body.dark .priority-medium {
+    background: #2a241a;
+    color: #fb923c;
+}
+
+body.dark .priority-low {
+    background: #142c3a;
+    color: #7dd3fc;
+}
+
+body.dark .delete-task:hover {
+    background: #3b1e1e;
+}
+
+body.dark input:focus, 
+body.dark select:focus {
+    border-color: #ad46b6;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 550px) {
+    body {
+        padding: 1.5rem 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .task-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .delete-task {
+        align-self: flex-end;
+    }
+    
+    .theme-toggle {
+        top: 0.8rem;
+        right: 1rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.8rem;
+    }
+}
+
+/* Empty state styling */
+#tasklist:empty::before {
+    content: "✨ No tasks yet. Add your first task above! ✨";
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 1rem;
+    color: #64748b;
+    font-style: italic;
+    border: 1px dashed #cbd5e1;
+}
+
+body.dark #tasklist:empty::before {
+    background: #1e293b;
+    color: #94a3b8;
+    border-color: #334155;
 }

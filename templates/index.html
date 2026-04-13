@@ -2,10 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>JipangeNow — Smart Task Manager</title>
+    <link rel="stylesheet" href="../static/style.css">
 </head>
 <body>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">🌓 Dark mode</button>
+    <header>
+        <h1>JipangeNow</h1>
+        <p style="font-size: 0.85rem; margin-top: 0.4rem; opacity: 0.75;">Organize, edit, prioritize — stay on track.</p>
+    </header>
+
+    <label for="title">Task Title</label>
+    <input type="text" id="title" placeholder="e.g., Finish project proposal" required>
+
+    <label for="category">Category</label>
+    <select id="category">
+        <option value="work">💼 work</option>
+        <option value="Personal">🧘 Personal</option>
+        <option value="Study">📚 Study</option>
+        <option value="Finances">Finances</option>
+        <option value="Health">Health</option>
+        <option value="Spirituality">Spirituality</option>
+</select>
+
+    <label for="priority">Priority</label>
+    <select id="priority">
+        <option value="low">🟢 Low</option>
+        <option value="medium">🟠 Medium</option>
+        <option value="high">🔴 High</option>
+    </select>
+
+    <label for="dueDate">Due Date</label>
+    <input type="date" id="dueDate">
+
+    <button id="addTaskBtn">+ Add Task</button>
     
+    <div id="tasklist"></div>
+    <script src="../script/app.js"></script>
 </body>
 </html>
