@@ -49,9 +49,3 @@ JipangeNow (Swahili for "Organize Yourself Now") is a powerful yet lightweight t
 
 When you mark a task as complete, JipangeNow provides satisfying visual feedback:
 
-```mermaid
-graph LR
-    A[Click Checkbox] --> B[Strike-through Animation]
-    B --> C[Task Fades Visually]
-    C --> D[Completion Indicator]
-    D --> E[Progress Updates]
