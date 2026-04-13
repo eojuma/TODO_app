@@ -47,5 +47,5 @@ JipangeNow (Swahili for "Organize Yourself Now") is a powerful yet lightweight t
 
 ### ✅ Task Completion
 
-When you mark a task as complete, JipangeNow provides satisfying visual feedback:
+When you mark a task as complete, JipangeNow provides satisfying visual feedback
 
