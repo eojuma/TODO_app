@@ -9,7 +9,7 @@
 <body>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode">🌓 Dark mode</button>
     <header>
-        <h1>JipangeNow</h1>
+        <h1>📋 JipangeNow</h1>
         <p style="font-size: 0.85rem; margin-top: 0.4rem; opacity: 0.75;">Organize, edit, prioritize — stay on track.</p>
     </header>
 
@@ -18,13 +18,13 @@
 
     <label for="category">Category</label>
     <select id="category">
-        <option value="work">💼 work</option>
+        <option value="work">💼 Work</option>
         <option value="Personal">🧘 Personal</option>
         <option value="Study">📚 Study</option>
-        <option value="Finances">Finances</option>
-        <option value="Health">Health</option>
-        <option value="Spirituality">Spirituality</option>
-</select>
+        <option value="Finances">💰 Finances</option>
+        <option value="Health">🏥 Health</option>
+        <option value="Spirituality">✨ Spirituality</option>
+    </select>
 
     <label for="priority">Priority</label>
     <select id="priority">
@@ -39,6 +39,11 @@
     <button id="addTaskBtn">+ Add Task</button>
     
     <div id="tasklist"></div>
+
+    <div id="progress-container">
+        <div id="bubble-pop">0%</div>
+    </div>
+
     <script src="../script/app.js"></script>
 </body>
 </html>
