@@ -1,41 +1,22 @@
-/* --- Root Variables & Base Styles --- */
-:root {
-    --bg-color: #f8fafc;
-    --text-color: #1e293b;
-    --card-bg: #ffffff;
-    --accent-color: #6366f1;
-    --border-color: #e2e8f0;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --heading-gradient: linear-gradient(135deg, #e57bff, #943794);
-}
-
-/* Dark Mode Overrides - Uniformly using .dark-mode */
-body.dark-mode {
-    --bg-color: #0f172a;
-    --text-color: #f1f5f9;
-    --card-bg: #1e293b;
-    --border-color: #334155;
-    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-}
-
+/* ===== RESET & BASE STYLES ===== */
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: system-ui, -apple-system, sans-serif;
-    /* Use variables here so they actually change */
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: #f5f7fb;
+    color: #1e293b;
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 1.5rem;
+    line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- UI Components --- */
+/* ===== TYPOGRAPHY & HEADER ===== */
 header {
     text-align: center;
     margin-bottom: 2rem;
@@ -44,117 +25,732 @@ header {
 h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    background: var(--heading-gradient);
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
     letter-spacing: -0.02em;
 }
 
+header p {
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    opacity: 0.75;
+    color: #475569;
+}
+
+/* ===== FORM STYLES ===== */
 label {
     display: block;
-    font-size: 0.875rem;
     font-weight: 600;
     margin-top: 1rem;
     margin-bottom: 0.25rem;
-    color: #ca02fc; /* Kept your brand purple */
+    font-size: 0.875rem;
+    color: #475569;
 }
 
-input, select {
+input, select, button:not(.theme-toggle) {
     width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--card-bg);
-    color: var(--text-color);
+    padding: 0.75rem 1rem;
     font-size: 1rem;
-    outline: none;
-    transition: border 0.2s;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    background: white;
+    transition: all 0.2s ease;
 }
 
 input:focus, select:focus {
-    border-color: #8d379e;
-    box-shadow: 0 0 0 3px rgba(247, 97, 234, 0.1);
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* --- Buttons --- */
+/* Due Date Input Styling */
+input[type="date"] {
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+/* Add Task Button */
 button:not(.theme-toggle) {
-    width: 100%;
-    padding: 0.8rem;
-    background: linear-gradient(135deg, #df16e6, #7c3aed);
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
     color: white;
+    font-weight: 600;
     border: none;
-    border-radius: 8px;
     margin-top: 1.5rem;
     cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.1s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 button:not(.theme-toggle):hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+    background: linear-gradient(135deg, #1d4ed8, #6d28d9);
 }
 
+button:not(.theme-toggle):active {
+    transform: scale(0.98);
+}
+
+/* ===== THEME TOGGLE BUTTON ===== */
 .theme-toggle {
     position: fixed;
-    top: 1rem;
+    top: 1.2rem;
     right: 1.5rem;
-    background: var(--card-bg);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+    background: white;
+    border: 1px solid #e2e8f0;
     border-radius: 2rem;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
+    backdrop-filter: blur(4px);
+    background-color: rgba(255,255,255,0.9);
+    transition: all 0.2s ease;
     z-index: 100;
 }
 
-/* --- Task List & Items --- */
-.task-item {
-    background: var(--card-bg);
-    padding: 1.2rem;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow);
+.theme-toggle:hover {
+    background: #f1f5f9;
+    transform: scale(1.02);
+}
+
+/* ===== TASK LIST STYLES ===== */
+#tasklist {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Individual task card */
+.task-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 1px solid #eef2ff;
+    transition: all 0.3s ease;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    animation: fadeIn 0.3s ease-out;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
-/* Accomplished State */
-.completed {
-    opacity: 0.6;
+.task-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+    border-color: #cbd5e1;
 }
 
-.completed span, .completed .task-title {
+/* ===== STRIKE-THROUGH FEATURE FOR COMPLETED TASKS ===== */
+/* Completed task styling */
+.task-card.completed {
+    opacity: 0.75;
+    background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+    border-color: #d1d5db;
+}
+
+.task-card.completed:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+/* Strike-through animation for the title */
+.task-card.completed .task-title {
     text-decoration: line-through;
     text-decoration-thickness: 2px;
+    text-decoration-color: #ef4444;
+    color: #9ca3af;
+    transition: all 0.3s ease;
+}
+
+/* Optional: Strike-through with animation */
+@keyframes strikeThrough {
+    from {
+        text-decoration-color: transparent;
+    }
+    to {
+        text-decoration-color: #ef4444;
+    }
+}
+
+.task-card.completed .task-title {
+    animation: strikeThrough 0.3s ease forwards;
+}
+
+/* Style for the checkbox when task is completed */
+.task-card.completed .task-checkbox {
+    accent-color: #10b981;
+    transform: scale(1.05);
+}
+
+/* Dim the badges when task is completed */
+.task-card.completed .priority-badge,
+.task-card.completed .category-badge,
+.task-card.completed .due-date-badge {
+    opacity: 0.6;
+    filter: grayscale(0.1);
+}
+
+/* Add a subtle checkmark indicator for completed tasks */
+.task-card.completed::before {
+    content: "✓";
+    position: absolute;
+    left: -0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #10b981;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-card.completed {
+    position: relative;
+    overflow: hidden;
+}
+
+.task-card.completed::before {
+    opacity: 0.3;
+}
+
+/* Optional: Confetti effect background for completed tasks */
+.task-card.completed {
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(16, 185, 129, 0.02) 0px,
+        rgba(16, 185, 129, 0.02) 2px,
+        transparent 2px,
+        transparent 8px
+    );
+}
+
+/* Task content area */
+.task-content {
+    flex: 1;
+    min-width: 200px;
+}
+
+.task-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Custom checkbox styling for better visual feedback */
+.task-checkbox {
+    width: 1.3rem;
+    height: 1.3rem;
+    cursor: pointer;
+    margin: 0;
+    transition: all 0.2s ease;
+    accent-color: #3b82f6;
+}
+
+.task-checkbox:hover {
+    transform: scale(1.1);
+}
+
+.task-checkbox:checked {
+    accent-color: #10b981;
+    animation: checkPop 0.2s ease;
+}
+
+@keyframes checkPop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.task-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #0f172a;
+    flex: 1;
+    word-break: break-word;
+    transition: all 0.3s ease;
+}
+
+.task-meta {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.7rem;
+    font-weight: 500;
+    align-items: center;
+}
+
+/* Priority & category badges */
+.priority-badge, .category-badge, .due-date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2rem;
+    background: #f1f5f9;
+    color: #334155;
+    font-size: 0.7rem;
+    transition: all 0.2s ease;
+}
+
+.priority-high {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 3px solid #dc2626;
+}
+
+.priority-medium {
+    background: #fff3e3;
+    color: #b45309;
+    border-left: 3px solid #f97316;
+}
+
+.priority-low {
+    background: #e0f2fe;
+    color: #075985;
+    border-left: 3px solid #0ea5e9;
+}
+
+.category-badge[data-category="work"] { background: #e0e7ff; color: #3730a3; }
+.category-badge[data-category="Personal"] { background: #fce7f3; color: #9d174d; }
+.category-badge[data-category="Study"] { background: #dcfce7; color: #166534; }
+
+/* Due Date Badge */
+.due-date-badge {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.due-date-badge.overdue {
+    background: #fee2e2;
+    color: #dc2626;
+    animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.due-date-badge.today {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+/* Task action buttons */
+.task-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-task-btn, .edit-priority-btn, .edit-category-btn, .delete-task {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    width: auto;
+    font-size: 1rem;
+}
+
+.edit-task-btn:hover, .edit-priority-btn:hover, .edit-category-btn:hover {
+    background: #e2e8f0;
+    transform: scale(1.05);
+}
+
+.delete-task:hover {
+    color: #ef4444;
+    background: #fee2e2;
+    transform: scale(1.05);
+}
+
+/* ===== TASK CONTROLS (FILTERS & SORT) ===== */
+.task-controls {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-group, .sort-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn, .sort-btn {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.5rem;
+    background: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover, .sort-btn:hover {
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.sort-btn.active {
+    background: #8b5cf6;
+    color: white;
+    border-color: #8b5cf6;
+}
+
+.clear-all-btn, .export-btn, .import-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+}
+
+.clear-all-btn {
+    border: 1px solid #ef4444;
+    background: white;
+    color: #ef4444;
+}
+
+.clear-all-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+.export-btn, .import-btn {
+    border: 1px solid #10b981;
+    background: white;
+    color: #10b981;
+}
+
+.export-btn:hover, .import-btn:hover {
+    background: #10b981;
+    color: white;
+}
+
+/* ===== TASK COUNTER ===== */
+#task-counter {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* ===== NOTIFICATION STYLES ===== */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 300px;
+}
+
+.notification.success {
+    background: #10b981;
+    color: white;
+}
+
+.notification.error {
+    background: #ef4444;
+    color: white;
+}
+
+.notification.info {
+    background: #3b82f6;
+    color: white;
+}
+
+.notification.warning {
+    background: #f59e0b;
+    color: white;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* ===== DARK MODE STYLES ===== */
+body.dark {
+    background: #0f172a;
+    color: #e2e8f0;
+}
+
+body.dark label {
     color: #94a3b8;
 }
 
-/* Empty State */
+body.dark header p {
+    color: #94a3b8;
+}
+
+body.dark input, 
+body.dark select,
+body.dark .task-card,
+body.dark .theme-toggle,
+body.dark .task-controls {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+body.dark .task-title {
+    color: #f1f5f9;
+}
+
+/* Dark mode completed task styles */
+body.dark .task-card.completed {
+    background: #0f172a;
+    opacity: 0.8;
+}
+
+body.dark .task-card.completed .task-title {
+    color: #6b7280;
+    text-decoration-color: #ef4444;
+}
+
+body.dark .priority-badge,
+body.dark .category-badge,
+body.dark .due-date-badge {
+    background: #334155;
+    color: #cbd5e6;
+}
+
+body.dark .priority-high {
+    background: #2d1a1a;
+    color: #f87171;
+}
+
+body.dark .priority-medium {
+    background: #2a241a;
+    color: #fb923c;
+}
+
+body.dark .priority-low {
+    background: #142c3a;
+    color: #7dd3fc;
+}
+
+body.dark .edit-task-btn:hover, 
+body.dark .edit-priority-btn:hover, 
+body.dark .edit-category-btn:hover {
+    background: #334155;
+}
+
+body.dark .delete-task:hover {
+    background: #3b1e1e;
+}
+
+body.dark input:focus, 
+body.dark select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+}
+
+body.dark .filter-btn, 
+body.dark .sort-btn,
+body.dark .clear-all-btn,
+body.dark .export-btn,
+body.dark .import-btn {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}
+
+body.dark .filter-btn.active {
+    background: #3b82f6;
+    color: white;
+}
+
+body.dark .sort-btn.active {
+    background: #8b5cf6;
+    color: white;
+}
+
+body.dark .clear-all-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+body.dark .export-btn:hover,
+body.dark .import-btn:hover {
+    background: #10b981;
+    color: white;
+}
+
+body.dark #task-counter {
+    color: #94a3b8;
+    border-top-color: #334155;
+}
+
+body.dark .notification {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 550px) {
+    body {
+        padding: 1.5rem 1rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .task-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .task-actions {
+        align-self: flex-end;
+    }
+    
+    .theme-toggle {
+        top: 0.8rem;
+        right: 1rem;
+        font-size: 0.75rem;
+        padding: 0.35rem 0.8rem;
+    }
+    
+    .task-controls {
+        flex-direction: column;
+    }
+    
+    .filter-group, .sort-group {
+        justify-content: center;
+    }
+}
+
+/* ===== EMPTY STATE ===== */
 #tasklist:empty::before {
     content: "✨ No tasks yet. Add your first task above! ✨";
     display: block;
     text-align: center;
     padding: 2rem;
-    background: var(--card-bg);
+    background: #f8fafc;
     border-radius: 1rem;
     color: #64748b;
-    border: 1px dashed var(--border-color);
+    font-style: italic;
+    border: 1px dashed #cbd5e1;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+body.dark #tasklist:empty::before {
+    background: #1e293b;
+    color: #94a3b8;
+    border-color: #334155;
 }
 
-/* Responsive */
-@media (max-width: 550px) {
-    body { padding: 1rem; }
-    .theme-toggle { top: 0.5rem; right: 0.5rem; }
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+body.dark ::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+body.dark ::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+body.dark ::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .theme-toggle, 
+    .task-actions, 
+    .task-controls, 
+    button:not(.theme-toggle),
+    .notification {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+        padding: 1rem;
+    }
+    
+    .task-card {
+        break-inside: avoid;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+    
+    .task-card.completed .task-title {
+        text-decoration: line-through;
+    }
 }
