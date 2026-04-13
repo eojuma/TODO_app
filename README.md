@@ -2,7 +2,7 @@
 
 # 📋 JipangeNow
 
-### *Organize, Edit, Prioritize — Stay on Track*
+### *Organize, Edit, Prioritize and Stay on Track*
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/jipangenow)
