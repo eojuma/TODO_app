@@ -11,7 +11,6 @@
 
 **A lightweight, browser-based task manager that helps you organize, prioritize, and track your tasks efficiently — with zero backend required.**
 
- • [Report Bug](#) • [Request Feature](#)
 
 </div>
 
