@@ -1,44 +1,58 @@
-🚀 JipangeNow — Smart Task Manager
+<div align="center">
 
-JipangeNow is a lightweight, browser-based task manager designed to help you organize, prioritize, and track your tasks efficiently — with zero backend required.
+# 📋 JipangeNow — Smart Task Manager
 
-It uses localStorage, so everything runs instantly and persists in your browser.
+### *Organize, Prioritize, and Track Your Tasks with Zero Setup*
 
-✨ Features
-📝 Task Management
-Add tasks with:
-Title
-Category (Work, Personal, Study, etc.)
-Priority (Low, Medium, High)
-Due date
-Edit tasks inline
-Delete tasks instantly
-✅ Task Completion
-Mark tasks as complete with a checkbox
-Completed tasks:
-Fade visually
-Show strike-through animation
-Get a subtle completion indicator
-⏱️ Smart Feedback
-Overdue tasks are highlighted
-Due dates are clearly displayed
-Visual cues help you stay on track
-📊 Progress Tracker
-Floating progress bubble shows completion %
-Smooth scaling animation as you progress
-🎉 “Burst” animation when you hit 100%
-🎨 UI/UX
-Clean, modern design
-Fully responsive (mobile-friendly)
-Smooth animations and transitions
-🌙 Dark Mode
-Toggle between light and dark themes
-Preference saved in localStorage
-💾 Persistent Storage
-Tasks are saved automatically in your browser
-No login, no database, no setup needed
-🛠️ Tech Stack
-HTML5
-CSS3 (custom styling, animations, responsive design)
-Vanilla JavaScript (ES6)
-LocalStorage API
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/jipangenow)
+[![Built with Vanilla JS](https://img.shields.io/badge/Built%20with-Vanilla%20JS-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Uses LocalStorage](https://img.shields.io/badge/Storage-LocalStorage-4caf50.svg)](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+**A lightweight, browser-based task manager that helps you organize, prioritize, and track your tasks efficiently — with zero backend required.**
+
+[Live Demo](#) • [Report Bug](#) • [Request Feature](#)
+
+</div>
+
+---
+
+## 🚀 Overview
+
+JipangeNow (Swahili for "Organize Yourself Now") is a powerful yet lightweight task management application that runs entirely in your browser. **No database, no login, no setup** — just open and start organizing.
+
+### Why JipangeNow?
+
+| Feature | Benefit |
+|---------|---------|
+| ⚡ **Instant** | No loading screens, no waiting |
+| 🔒 **Private** | Your data stays on your device |
+| 💾 **Persistent** | Tasks survive browser restarts |
+| 📱 **Mobile** | Works on any device, any screen size |
+| 🆓 **Free** | No subscriptions, no hidden costs |
+
+---
+
+## ✨ Features
+
+### 📝 Task Management
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Add Tasks** | Create tasks with title, category, priority, and due date | ✅ Live |
+| **Edit Tasks** | Modify task titles, categories, and priorities inline | ✅ Live |
+| **Delete Tasks** | Remove unwanted tasks instantly | ✅ Live |
+| **Categories** | Work, Personal, Study with color-coded badges | ✅ Live |
+| **Priorities** | High, Medium, Low with visual indicators | ✅ Live |
+| **Due Dates** | Set deadlines with smart highlighting | ✅ Live |
+
+### ✅ Task Completion
+
+When you mark a task as complete, JipangeNow provides satisfying visual feedback:
+
+```mermaid
+graph LR
+    A[Click Checkbox] --> B[Strike-through Animation]
+    B --> C[Task Fades Visually]
+    C --> D[Completion Indicator]
+    D --> E[Progress Updates]
