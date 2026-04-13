@@ -6,14 +6,16 @@
     --accent-color: #6366f1;
     --border-color: #e2e8f0;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --heading-gradient: linear-gradient(135deg, #e57bff, #943794);
 }
 
-/* Dark Mode Overrides (Triggered via JS class on body) */
+/* Dark Mode Overrides - Uniformly using .dark-mode */
 body.dark-mode {
     --bg-color: #0f172a;
     --text-color: #f1f5f9;
     --card-bg: #1e293b;
     --border-color: #334155;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -23,12 +25,14 @@ body.dark-mode {
 }
 
 body {
-    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: #8ea7da;
-    color: #361e3b;
+    font-family: system-ui, -apple-system, sans-serif;
+    /* Use variables here so they actually change */
+    background-color: var(--bg-color);
+    color: var(--text-color);
     max-width: 800px;
     margin: 0 auto;
-    transition: background-color 0.3s ease;
+    padding: 2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- UI Components --- */
@@ -40,7 +44,7 @@ header {
 h1 {
     font-size: 2.2rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #e57bff, #943794);
+    background: var(--heading-gradient);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
@@ -49,12 +53,11 @@ h1 {
 
 label {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.875rem;
     font-weight: 600;
     margin-top: 1rem;
     margin-bottom: 0.25rem;
-    font-size: 0.875rem;
-    color: #ca02fc;
+    color: #ca02fc; /* Kept your brand purple */
 }
 
 input, select {
@@ -67,66 +70,82 @@ input, select {
     color: var(--text-color);
     font-size: 1rem;
     outline: none;
+    transition: border 0.2s;
 }
 
 input:focus, select:focus {
-    outline: none;
     border-color: #8d379e;
     box-shadow: 0 0 0 3px rgba(247, 97, 234, 0.1);
 }
 
-/* Add Task Button */
+/* --- Buttons --- */
 button:not(.theme-toggle) {
+    width: 100%;
+    padding: 0.8rem;
     background: linear-gradient(135deg, #df16e6, #7c3aed);
     color: white;
     border: none;
+    border-radius: 8px;
     margin-top: 1.5rem;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    font-weight: bold;
+    transition: transform 0.1s, box-shadow 0.2s;
 }
 
 button:not(.theme-toggle):hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-    background: linear-gradient(135deg, #c138d3, #6d28d9);
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
 }
 
-/* ===== THEME TOGGLE BUTTON ===== */
 .theme-toggle {
     position: fixed;
-    top: 1.2rem;
+    top: 1rem;
     right: 1.5rem;
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
     border-radius: 2rem;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
-    font-weight: 500;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: transform 0.1s;
-}
-
-#addTaskBtn:active {
-    transform: scale(0.98);
+    z-index: 100;
 }
 
 /* --- Task List & Items --- */
-#tasklist {
-    margin-top: 2.5rem;
-}
-
 .task-item {
     background: var(--card-bg);
-    padding: 1rem;
+    padding: 1.2rem;
     border-radius: 12px;
     margin-bottom: 1rem;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow);
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
     animation: fadeIn 0.3s ease-out;
+}
+
+/* Accomplished State */
+.completed {
+    opacity: 0.6;
+}
+
+.completed span, .completed .task-title {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: #94a3b8;
+}
+
+/* Empty State */
+#tasklist:empty::before {
+    content: "✨ No tasks yet. Add your first task above! ✨";
+    display: block;
+    text-align: center;
+    padding: 2rem;
+    background: var(--card-bg);
+    border-radius: 1rem;
+    color: #64748b;
+    border: 1px dashed var(--border-color);
 }
 
 @keyframes fadeIn {
@@ -134,104 +153,8 @@ button:not(.theme-toggle):hover {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Accomplished/Strikethrough Class --- */
-.completed {
-    opacity: 0.5;
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.completed .task-title {
-    text-decoration: line-through;
-    text-decoration-thickness: 2px;
-    color: #94a3b8;
-}
-
-body.dark input, 
-body.dark select,
-body.dark .task-card,
-body.dark .theme-toggle {
-    background: #1e293b;
-    border-color: #334155;
-    color: #f1f5f9;
-}
-
-body.dark .task-title {
-    color: #f1f5f9;
-}
-
-body.dark .priority-badge,
-body.dark .category-badge {
-    background: #334155;
-    color: #cbd5e6;
-}
-
-body.dark .priority-high {
-    background: #2d1a1a;
-    color: #f87171;
-}
-
-body.dark .priority-medium {
-    background: #2a241a;
-    color: #fb923c;
-}
-
-body.dark .priority-low {
-    background: #142c3a;
-    color: #7dd3fc;
-}
-
-body.dark .delete-task:hover {
-    background: #3b1e1e;
-}
-
-body.dark input:focus, 
-body.dark select:focus {
-    border-color: #ad46b6;
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-}
-
-/* ===== RESPONSIVE ===== */
+/* Responsive */
 @media (max-width: 550px) {
-    body {
-        padding: 1.5rem 1rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
-    
-    .task-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .delete-task {
-        align-self: flex-end;
-    }
-    
-    .theme-toggle {
-        top: 0.8rem;
-        right: 1rem;
-        font-size: 0.75rem;
-        padding: 0.35rem 0.8rem;
-    }
-}
-
-/* Empty state styling */
-#tasklist:empty::before {
-    content: "✨ No tasks yet. Add your first task above! ✨";
-    display: block;
-    text-align: center;
-    padding: 2rem;
-    background: #f8fafc;
-    border-radius: 1rem;
-    color: #64748b;
-    font-style: italic;
-    border: 1px dashed #cbd5e1;
-}
-
-body.dark #tasklist:empty::before {
-    background: #1e293b;
-    color: #94a3b8;
-    border-color: #334155;
+    body { padding: 1rem; }
+    .theme-toggle { top: 0.5rem; right: 0.5rem; }
 }
